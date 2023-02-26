@@ -37,6 +37,6 @@ public class Measurement {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "sensor", referencedColumnName = "sensor_id")
+    @JoinColumn(name = "sensor", referencedColumnName = "name")
     private Sensor sensor;
 }

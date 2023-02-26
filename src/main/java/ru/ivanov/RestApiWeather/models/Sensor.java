@@ -7,11 +7,13 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "sensor")
 @Getter
 @Setter
-public class Sensor {
+public class Sensor implements Serializable {
 
     @Id
     @Column(name = "sensor_id")

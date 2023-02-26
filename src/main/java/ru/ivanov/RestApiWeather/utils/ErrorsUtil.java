@@ -1,4 +1,4 @@
-package ru.ivanov.RestApiWeather.util;
+package ru.ivanov.RestApiWeather.utils;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

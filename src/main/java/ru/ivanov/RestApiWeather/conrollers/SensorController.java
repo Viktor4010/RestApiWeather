@@ -8,13 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.ivanov.RestApiWeather.dto.SensorDto;
+import ru.ivanov.RestApiWeather.dto.SensorDTO;
 import ru.ivanov.RestApiWeather.exceptions.MeasurementException;
 import ru.ivanov.RestApiWeather.models.Sensor;
 import ru.ivanov.RestApiWeather.service.SensorService;
-import ru.ivanov.RestApiWeather.util.ErrorsUtil;
-import ru.ivanov.RestApiWeather.util.MeasurementExceptionResponse;
-import ru.ivanov.RestApiWeather.util.SensorValidator;
+import ru.ivanov.RestApiWeather.utils.ErrorsUtil;
+import ru.ivanov.RestApiWeather.utils.MeasurementExceptionResponse;
+import ru.ivanov.RestApiWeather.utils.SensorValidator;
 
 import java.time.LocalDateTime;
 
@@ -26,15 +26,17 @@ public class SensorController {
     private final SensorValidator sensorValidator;
     private final SensorService sensorService;
 
+
     @Autowired
     public SensorController(ModelMapper modelMapper, SensorValidator sensorValidator, SensorService sensorService) {
         this.modelMapper = modelMapper;
         this.sensorValidator = sensorValidator;
+
         this.sensorService = sensorService;
     }
 
     @PostMapping(value = "/registration", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> registerNewSensor(@RequestBody @Valid SensorDto sensorDto,
+    public ResponseEntity<HttpStatus> registerNewSensor(@RequestBody @Valid SensorDTO sensorDto,
                                                         BindingResult bindingResult) {
         Sensor sensor = convertToSensor(sensorDto);
 
@@ -48,7 +50,7 @@ public class SensorController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    private Sensor convertToSensor(SensorDto sensorDto) {
+    private Sensor convertToSensor(SensorDTO sensorDto) {
         return modelMapper.map(sensorDto, Sensor.class);
     }
 

@@ -1,4 +1,4 @@
-package ru.ivanov.RestApiWeather.util;
+package ru.ivanov.RestApiWeather.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

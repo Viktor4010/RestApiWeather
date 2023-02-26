@@ -1,4 +1,4 @@
-package ru.ivanov.RestApiWeather.util;
+package ru.ivanov.RestApiWeather.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
