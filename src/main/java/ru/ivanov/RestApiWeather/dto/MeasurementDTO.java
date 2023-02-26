@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import ru.ivanov.RestApiWeather.models.Sensor;
-
 @Getter
 @Setter
 public class MeasurementDTO {
@@ -19,5 +17,5 @@ public class MeasurementDTO {
     private Boolean raining;
 
     @NotNull
-    private Sensor sensor;
+    private SensorDTO sensor;
 }

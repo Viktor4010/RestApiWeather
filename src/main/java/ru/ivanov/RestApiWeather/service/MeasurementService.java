@@ -23,7 +23,8 @@ public class MeasurementService {
 
     @Transactional(readOnly = true)
     public List<Measurement> findAllMeasurements() {
-        return measurementRepository.findAll(Sort.by(Sort.Direction.ASC));
+        Sort sort = Sort.by("value").ascending();
+        return measurementRepository.findAll(sort);
     }
 
     @Transactional

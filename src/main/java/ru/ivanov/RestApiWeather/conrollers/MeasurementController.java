@@ -11,11 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ivanov.RestApiWeather.dto.MeasurementDTO;
 import ru.ivanov.RestApiWeather.dto.MeasurementResponse;
-import ru.ivanov.RestApiWeather.utils.ErrorsUtil;
-import ru.ivanov.RestApiWeather.utils.MeasurementExceptionResponse;
 import ru.ivanov.RestApiWeather.exceptions.MeasurementException;
 import ru.ivanov.RestApiWeather.models.Measurement;
 import ru.ivanov.RestApiWeather.service.MeasurementService;
+import ru.ivanov.RestApiWeather.utils.ErrorsUtil;
+import ru.ivanov.RestApiWeather.utils.MeasurementExceptionResponse;
+import ru.ivanov.RestApiWeather.utils.MeasurementsValidator;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -25,11 +26,13 @@ import java.util.stream.Collectors;
 public class MeasurementController {
     private final MeasurementService measurementService;
     private final ModelMapper modelMapper;
+    private final MeasurementsValidator measurementsValidator;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper) {
+    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper, MeasurementsValidator measurementsValidator) {
         this.measurementService = measurementService;
         this.modelMapper = modelMapper;
+        this.measurementsValidator = measurementsValidator;
     }
 
 
@@ -49,12 +52,12 @@ public class MeasurementController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addMeasurement(@RequestBody @Valid MeasurementDTO measurementDTO,
-                                               BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> addMeasurement(@RequestBody @Valid MeasurementDTO measurementDTO,
+                                                     BindingResult bindingResult) {
 
         Measurement measurement = convertToMeasurement(measurementDTO);
 
-
+        measurementsValidator.validate(measurement, bindingResult);
         if (bindingResult.hasErrors())
             ErrorsUtil.errorMessageForClient(bindingResult);
 
@@ -72,7 +75,6 @@ public class MeasurementController {
     }
 
 
-
     private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
         return modelMapper.map(measurement, MeasurementDTO.class);
     }
@@ -80,7 +82,6 @@ public class MeasurementController {
     private Measurement convertToMeasurement(MeasurementDTO measurementDto) {
         return modelMapper.map(measurementDto, Measurement.class);
     }
-
 
 
 }
